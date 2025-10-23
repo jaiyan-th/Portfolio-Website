@@ -1,0 +1,377 @@
+/**
+ * Main JavaScript functionality for Portfolio Website
+ * Handles navigation, smooth scrolling, and component initialization
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all components
+    initializeNavigation();
+    initializeSmoothScrolling();
+    initializeAnimations();
+    loadProjects();
+    loadSkills();
+    initializeContactForm();
+});
+
+// Navigation Functionality
+function initializeNavigation() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+    const navbar = document.getElementById('navbar');
+    
+    // Mobile menu toggle
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuButton.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars text-xl';
+            } else {
+                icon.className = 'fas fa-times text-xl';
+            }
+        });
+    }
+    
+    // Close mobile menu when clicking on links
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuButton.querySelector('i');
+                icon.className = 'fas fa-bars text-xl';
+            }
+        });
+    });
+    
+    // Navbar scroll effect
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (navbar) {
+            if (scrollTop > 100) {
+                navbar.classList.add('bg-white/90', 'dark:bg-dark-bg/90');
+                navbar.classList.remove('bg-white/80', 'dark:bg-dark-bg/80');
+            } else {
+                navbar.classList.remove('bg-white/90', 'dark:bg-dark-bg/90');
+                navbar.classList.add('bg-white/80', 'dark:bg-dark-bg/80');
+            }
+        }
+        
+        // Update active navigation link
+        updateActiveNavLink();
+        
+        lastScrollTop = scrollTop;
+    });
+}
+
+// Smooth Scrolling Implementation
+function initializeSmoothScrolling() {
+    // Handle navigation links
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const offsetTop = targetSection.offsetTop - 80; // Account for fixed navbar
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Handle "Explore My Work" button
+    const exploreBtn = document.getElementById('explore-work-btn');
+    if (exploreBtn) {
+        exploreBtn.addEventListener('click', function() {
+            const projectsSection = document.getElementById('projects');
+            if (projectsSection) {
+                const offsetTop = projectsSection.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
+}
+
+// Update Active Navigation Link
+function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+    
+    let currentSection = '';
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.clientHeight;
+        
+        if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('text-accent-blue', 'font-semibold');
+        link.classList.add('text-gray-600', 'dark:text-gray-300');
+        
+        if (link.getAttribute('href') === `#${currentSection}`) {
+            link.classList.remove('text-gray-600', 'dark:text-gray-300');
+            link.classList.add('text-accent-blue', 'font-semibold');
+        }
+    });
+}
+
+// Animation Initialization
+function initializeAnimations() {
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    const animatedElements = document.querySelectorAll('.fade-in, .slide-up');
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+}
+
+// Load Projects from API
+async function loadProjects() {
+    const projectsGrid = document.getElementById('projects-grid');
+    
+    try {
+        const response = await fetch('/api/projects');
+        const data = await response.json();
+        
+        if (data.status === 'success' && data.data.projects.length > 0) {
+            projectsGrid.innerHTML = '';
+            
+            data.data.projects.forEach(project => {
+                const projectCard = createProjectCard(project);
+                projectsGrid.appendChild(projectCard);
+            });
+        } else {
+            projectsGrid.innerHTML = `
+                <div class="col-span-full text-center py-12">
+                    <i class="fas fa-folder-open text-4xl text-gray-400 dark:text-gray-500 mb-4"></i>
+                    <p class="text-gray-500 dark:text-gray-400">No projects found.</p>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('Error loading projects:', error);
+        projectsGrid.innerHTML = `
+            <div class="col-span-full text-center py-12">
+                <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+                <p class="text-red-500">Error loading projects. Please try again later.</p>
+            </div>
+        `;
+    }
+}
+
+// Create Project Card Element
+function createProjectCard(project) {
+    const card = document.createElement('div');
+    card.className = 'bg-white dark:bg-dark-surface rounded-lg border border-gray-200 dark:border-dark-border p-6 hover:border-accent-blue dark:hover:border-accent-blue transform hover:scale-105 transition-all duration-300 hover:shadow-xl';
+    
+    const techStackBadges = project.tech_stack.map(tech => 
+        `<span class="px-2 py-1 bg-accent-blue/10 text-accent-blue text-xs rounded-full">${tech}</span>`
+    ).join('');
+    
+    card.innerHTML = `
+        <div class="mb-4">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">${project.title}</h3>
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">${project.description}</p>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex flex-wrap gap-2">
+                ${techStackBadges}
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-500 dark:text-gray-400">
+                <i class="fas fa-calendar mr-1"></i>
+                ${new Date(project.date_created).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+            </span>
+            
+            <div class="flex space-x-3">
+                ${project.github_url ? `
+                    <a href="${project.github_url}" target="_blank" 
+                       class="text-gray-400 hover:text-accent-blue transition-colors duration-300">
+                        <i class="fab fa-github text-lg"></i>
+                    </a>
+                ` : ''}
+                ${project.demo_url ? `
+                    <a href="${project.demo_url}" target="_blank" 
+                       class="text-gray-400 hover:text-accent-purple transition-colors duration-300">
+                        <i class="fas fa-external-link-alt text-lg"></i>
+                    </a>
+                ` : ''}
+            </div>
+        </div>
+        
+        ${project.featured ? `
+            <div class="absolute top-4 right-4">
+                <span class="bg-gradient-to-r from-accent-blue to-accent-purple text-white text-xs px-2 py-1 rounded-full">
+                    Featured
+                </span>
+            </div>
+        ` : ''}
+    `;
+    
+    // Make the card relative for absolute positioning of featured badge
+    if (project.featured) {
+        card.classList.add('relative');
+    }
+    
+    return card;
+}
+
+// Load Skills from API
+async function loadSkills() {
+    try {
+        const response = await fetch('/api/skills');
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            const skills = data.data.skills;
+            
+            // Populate programming skills
+            const programmingContainer = document.getElementById('programming-skills');
+            if (skills.programming && programmingContainer) {
+                programmingContainer.innerHTML = skills.programming.map(skill => 
+                    createSkillBadge(skill)
+                ).join('');
+            }
+            
+            // Populate tools
+            const toolsContainer = document.getElementById('tools-skills');
+            if (skills.tools && toolsContainer) {
+                toolsContainer.innerHTML = skills.tools.map(skill => 
+                    createSkillBadge(skill)
+                ).join('');
+            }
+            
+            // Populate learning skills
+            const learningContainer = document.getElementById('learning-skills');
+            if (skills.learning && learningContainer) {
+                learningContainer.innerHTML = skills.learning.map(skill => 
+                    createSkillBadge(skill, true)
+                ).join('');
+            }
+        }
+    } catch (error) {
+        console.error('Error loading skills:', error);
+    }
+}
+
+// Create Skill Badge Element
+function createSkillBadge(skill, isLearning = false) {
+    const badgeClass = isLearning 
+        ? 'bg-gradient-to-r from-accent-purple/20 to-accent-blue/20 text-accent-purple border border-accent-purple/30'
+        : 'bg-gradient-to-r from-accent-blue/20 to-accent-purple/20 text-accent-blue border border-accent-blue/30';
+    
+    return `
+        <div class="flex items-center space-x-2 px-4 py-2 ${badgeClass} rounded-full hover:scale-105 transition-transform duration-300">
+            ${skill.icon_class ? `<i class="${skill.icon_class}"></i>` : ''}
+            <span class="font-medium">${skill.name}</span>
+            ${isLearning ? '<i class="fas fa-graduation-cap text-xs"></i>' : ''}
+        </div>
+    `;
+}
+
+// Contact Form Functionality
+function initializeContactForm() {
+    const form = document.getElementById('contact-form');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const submitText = document.getElementById('submit-text');
+    const submitIcon = document.getElementById('submit-icon');
+    const messageDiv = document.getElementById('form-message');
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(form);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            subject: formData.get('subject'),
+            message: formData.get('message')
+        };
+        
+        // Update button state
+        submitBtn.disabled = true;
+        submitText.textContent = 'Sending...';
+        submitIcon.className = 'fas fa-spinner fa-spin ml-2';
+        
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            
+            if (result.status === 'success') {
+                showMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+                form.reset();
+            } else {
+                showMessage(result.error?.message || 'Failed to send message. Please try again.', 'error');
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            showMessage('Network error. Please check your connection and try again.', 'error');
+        } finally {
+            // Reset button state
+            submitBtn.disabled = false;
+            submitText.textContent = 'Send Message';
+            submitIcon.className = 'fas fa-paper-plane ml-2';
+        }
+    });
+}
+
+// Show Form Message
+function showMessage(message, type) {
+    const messageDiv = document.getElementById('form-message');
+    const bgColor = type === 'success' ? 'bg-green-100 text-green-800 border-green-200' : 'bg-red-100 text-red-800 border-red-200';
+    
+    messageDiv.className = `p-4 rounded-lg border ${bgColor}`;
+    messageDiv.textContent = message;
+    messageDiv.classList.remove('hidden');
+    
+    // Hide message after 5 seconds
+    setTimeout(() => {
+        messageDiv.classList.add('hidden');
+    }, 5000);
+}
