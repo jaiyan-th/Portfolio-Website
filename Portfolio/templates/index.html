@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+
+{% block title %}Jaiyanth B - Aspiring Developer | Portfolio{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden bg-white dark:bg-black-bg" role="banner" aria-label="Hero section introducing Jaiyanth B">
+    <!-- Hero Content -->
+    <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <div class="animate-fade-in">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black dark:text-white mb-6 font-poppins">
+                Hi, I'm <span class="text-accent-orange">Jaiyanth B</span>
+            </h1>
+            
+            <p class="text-xl sm:text-2xl md:text-3xl text-medium-gray dark:text-light-gray mb-12 font-medium font-poppins">
+                Aspiring Developer | Tech Enthusiast | Problem Solver
+            </p>
+            
+            <button id="explore-work-btn" 
+                    class="inline-flex items-center px-8 py-4 bg-accent-orange text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-102 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accent-orange/50 font-poppins"
+                    aria-label="Scroll to projects section">
+                <span>Explore My Work</span>
+                <i class="fas fa-arrow-down ml-2" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-20 bg-white dark:bg-dark-bg" role="main" aria-labelledby="about-heading">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 id="about-heading" class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">About Me</h2>
+            <div class="w-24 h-1 bg-accent-orange mx-auto"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Profile Photo -->
+            <div class="text-center lg:text-left">
+                <div class="relative inline-block">
+                    <div class="w-80 h-80 mx-auto lg:mx-0 rounded-full bg-accent-orange p-1">
+                        <div class="w-full h-full rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center" role="img" aria-label="Profile photo placeholder">
+                            <i class="fas fa-user text-6xl text-gray-400 dark:text-gray-500" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-4 -right-4 w-8 h-8 bg-accent-orange rounded-full animate-pulse"></div>
+                    <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-accent-orange/70 rounded-full animate-pulse delay-1000"></div>
+                </div>
+            </div>
+            
+            <!-- Bio Content -->
+            <div class="space-y-6">
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
+                    Building the Future with Code
+                </h3>
+                
+                <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                    I'm Jaiyanth B, passionate about software development, AI, and data-driven applications. 
+                    Currently pursuing B.Tech in Computer Science and Business Systems at VSB Engineering College.
+                </p>
+                
+                <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                    I aim to build secure, scalable, and impactful applications that solve real-world problems. 
+                    My journey in technology is driven by curiosity and a desire to create meaningful solutions.
+                </p>
+                
+                <!-- Education Info -->
+                <div class="bg-gray-50 dark:bg-dark-surface p-6 rounded-lg border border-gray-200 dark:border-dark-border">
+                    <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Education</h4>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        <i class="fas fa-graduation-cap text-accent-orange mr-2"></i>
+                        B.Tech Computer Science and Business Systems<br>
+                        <span class="text-sm text-gray-500 dark:text-gray-400 ml-6">VSB Engineering College</span>
+                    </p>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 gap-4 pt-4">
+                    <div class="text-center p-4 bg-accent-orange/10 rounded-lg">
+                        <div class="text-2xl font-bold text-accent-orange">2+</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Projects</div>
+                    </div>
+                    <div class="text-center p-4 bg-accent-orange/10 rounded-lg">
+                        <div class="text-2xl font-bold text-accent-orange">10+</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Skills</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="py-20 bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">My Projects</h2>
+            <div class="w-24 h-1 bg-accent-orange mx-auto mb-6"></div>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Here are some of the projects I've worked on, showcasing my skills in web development, AI, and problem-solving.
+            </p>
+        </div>
+        
+        <!-- Projects Grid -->
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+            <!-- Projects will be loaded dynamically -->
+            <div class="text-center col-span-full py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-orange mx-auto"></div>
+                <p class="text-gray-500 dark:text-gray-400 mt-4">Loading projects...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="py-20 bg-white dark:bg-dark-bg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Skills & Tools</h2>
+            <div class="w-24 h-1 bg-accent-orange mx-auto mb-6"></div>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Technologies and tools I work with to bring ideas to life.
+            </p>
+        </div>
+        
+        <!-- Skills Categories -->
+        <div class="space-y-12">
+            <!-- Programming Skills -->
+            <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 text-center">Programming Languages</h3>
+                <div id="programming-skills" class="flex flex-wrap justify-center gap-4">
+                    <!-- Skills will be loaded dynamically -->
+                </div>
+            </div>
+            
+            <!-- Tools -->
+            <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 text-center">Tools & Software</h3>
+                <div id="tools-skills" class="flex flex-wrap justify-center gap-4">
+                    <!-- Tools will be loaded dynamically -->
+                </div>
+            </div>
+            
+            <!-- Learning -->
+            <div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 text-center">Currently Learning</h3>
+                <div id="learning-skills" class="flex flex-wrap justify-center gap-4">
+                    <!-- Learning skills will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-20 bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Get In Touch</h2>
+            <div class="w-24 h-1 bg-accent-orange mx-auto mb-6"></div>
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                I'm always open to discussing new opportunities, collaborations, or just having a chat about technology.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- Contact Information -->
+            <div class="space-y-8">
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Let's Connect</h3>
+                
+                <!-- Email -->
+                <div class="flex items-center space-x-4 p-4 bg-white dark:bg-dark-surface rounded-lg border border-gray-200 dark:border-dark-border hover:border-accent-orange dark:hover:border-accent-orange transition-colors duration-300">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-accent-orange rounded-lg flex items-center justify-center">
+                            <i class="fas fa-envelope text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900 dark:text-white">Email</h4>
+                        <a href="mailto:jaiyanthofficial@gmail.com" class="text-accent-orange hover:text-accent-orange/80 transition-colors duration-300">
+                            jaiyanthofficial@gmail.com
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- LinkedIn -->
+                <div class="flex items-center space-x-4 p-4 bg-white dark:bg-dark-surface rounded-lg border border-gray-200 dark:border-dark-border hover:border-accent-orange dark:hover:border-accent-orange transition-colors duration-300">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-accent-orange rounded-lg flex items-center justify-center">
+                            <i class="fab fa-linkedin text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900 dark:text-white">LinkedIn</h4>
+                        <a href="https://linkedin.com/in/jaiyanth-b-8295b2315" target="_blank" rel="noopener noreferrer" class="text-accent-orange hover:text-accent-orange/80 transition-colors duration-300">
+                            linkedin.com/in/jaiyanth-b-8295b2315
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- GitHub -->
+                <div class="flex items-center space-x-4 p-4 bg-white dark:bg-dark-surface rounded-lg border border-gray-200 dark:border-dark-border hover:border-accent-orange dark:hover:border-accent-orange transition-colors duration-300">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-accent-orange rounded-lg flex items-center justify-center">
+                            <i class="fab fa-github text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900 dark:text-white">GitHub</h4>
+                        <a href="https://github.com/jaiyan-th" target="_blank" rel="noopener noreferrer" class="text-accent-orange hover:text-accent-orange/80 transition-colors duration-300">
+                            github.com/jaiyan-th
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="bg-white dark:bg-dark-surface p-8 rounded-lg border border-gray-200 dark:border-dark-border">
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Send a Message</h3>
+                
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Name *</label>
+                        <input type="text" id="name" name="name" required 
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-dark-border rounded-lg focus:ring-2 focus:ring-accent-orange focus:border-transparent bg-white dark:bg-dark-bg text-gray-900 dark:text-white transition-colors duration-300">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email *</label>
+                        <input type="email" id="email" name="email" required 
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-dark-border rounded-lg focus:ring-2 focus:ring-accent-orange focus:border-transparent bg-white dark:bg-dark-bg text-gray-900 dark:text-white transition-colors duration-300">
+                    </div>
+                    
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                        <input type="text" id="subject" name="subject" 
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-dark-border rounded-lg focus:ring-2 focus:ring-accent-orange focus:border-transparent bg-white dark:bg-dark-bg text-gray-900 dark:text-white transition-colors duration-300">
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message *</label>
+                        <textarea id="message" name="message" rows="5" required 
+                                  class="w-full px-4 py-3 border border-gray-300 dark:border-dark-border rounded-lg focus:ring-2 focus:ring-accent-orange focus:border-transparent bg-white dark:bg-dark-bg text-gray-900 dark:text-white transition-colors duration-300 resize-vertical"></textarea>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full bg-accent-orange text-white font-semibold py-3 px-6 rounded-lg hover:shadow-lg transform hover:scale-102 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <span id="submit-text">Send Message</span>
+                        <i id="submit-icon" class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+                
+                <!-- Form Messages -->
+                <div id="form-message" class="mt-4 hidden"></div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
